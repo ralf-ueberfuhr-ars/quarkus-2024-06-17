@@ -1,10 +1,9 @@
 package de.schulung.sample.quarkus;
 
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.UriBuilder;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -39,12 +38,20 @@ public class CustomersResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response createCustomer(Customer customer, @Context UriInfo info) {
+  // TODO Response generic?
+  public Response createCustomer(Customer customer) {
     customer.setUuid(UUID.randomUUID());
     customers.put(customer.getUuid(), customer);
-    var location = info.getAbsolutePathBuilder() // current URL
-      .path(customer.getUuid().toString()) // add "/<uuid>"
-      .build();
+    final var location = UriBuilder.fromResource(CustomersResource.class)
+      .path(CustomersResource.class, "findCustomerById")
+      .build(customer.getUuid().toString());
+    /* Alternatively, add a parameter "@Context UriInfo info" and use it like this:
+     *
+     * info
+     *   .getAbsolutePathBuilder()
+     *   .path(customer.getUuid().toString())
+     *   .build();
+     */
     return Response
       .created(location)
       .entity(customer)
@@ -53,7 +60,7 @@ public class CustomersResource {
 
   @GET
   @Path("/{uuid}")
-  public Customer findById(@PathParam("uuid") UUID uuid) {
+  public Customer findCustomerById(@PathParam("uuid") UUID uuid) {
     return customers.get(uuid);
   }
 

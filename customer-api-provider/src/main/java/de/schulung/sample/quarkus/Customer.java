@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Customer {
 
-  private UUID uuid;
+  private UUID uuid; // TODO readonly
   private String name;
   private LocalDate birthdate; // TODO birth_date?
   private String state; // TODO enum?
