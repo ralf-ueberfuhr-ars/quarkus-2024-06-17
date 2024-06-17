@@ -5,14 +5,14 @@ on:
     branches:
       - "main"
     paths:
-      - "customer-api-provider"
-      - ".github"
+      - "customer-api-provider/**"
+      - ".github/**"
   pull_request:
     branches:
       - "main"
     paths:
-      - "customer-api-provider"
-      - ".github"
+      - "customer-api-provider/**"
+      - ".github/**"
 
 jobs:
   build:
