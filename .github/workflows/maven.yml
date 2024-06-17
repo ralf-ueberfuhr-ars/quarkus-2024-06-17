@@ -20,4 +20,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      working-directory: customer-api-provider
       run: mvn -B package --file pom.xml
