@@ -83,7 +83,7 @@
           <artifactId>openapi-generator-maven-plugin</artifactId>
           <version>${openapi-generator-maven-plugin.version}</version>
           <configuration>
-            <!-- https://openapi-generator.tech/docs/generators/jaxrs-resteasy -->
+            <!-- https://openapi-generator.tech/docs/generators/jaxrs-spec -->
             <!-- Support for JSON-B: https://github.com/OpenAPITools/openapi-generator/issues/6881 -->
             <inputSpec>${openapi-generator.file}</inputSpec>
             <generatorName>jaxrs-spec</generatorName>
