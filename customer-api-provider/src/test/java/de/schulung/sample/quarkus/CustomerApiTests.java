@@ -2,6 +2,7 @@ package de.schulung.sample.quarkus;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -62,12 +63,12 @@ class CustomerApiTests {
         .when()
         .contentType(ContentType.JSON)
         .body("""
-                {
-                    "name": "Tom",
-                    "birth_date": "2000-10-04",
-                    "state": "active"
-                }
-                """)
+          {
+              "name": "Tom",
+              "birth_date": "2000-10-04",
+              "state": "active"
+          }
+          """)
         .accept(ContentType.JSON)
         .post("/customers")
         .then()
@@ -92,4 +93,60 @@ class CustomerApiTests {
     }
 
   }
+
+  @Nested
+  @DisplayName("GET /customers/uuid")
+  class GetSingleCustomerTests {
+
+    String customerLocation;
+
+    @BeforeEach
+      // we need to create a customer to be sure that one exist
+    void setup() {
+      customerLocation = given()
+        .when()
+        .contentType(ContentType.JSON)
+        .body("""
+          {
+              "name": "Tom",
+              "birth_date": "2000-10-04",
+              "state": "active"
+          }
+          """)
+        .accept(ContentType.JSON)
+        .post("/customers")
+        .then()
+        .statusCode(201)
+        .header("Location", is(notNullValue()))
+        .extract()
+        .header("Location");
+    }
+
+    @Nested
+    @DisplayName("with customer that does NOT exist")
+    class DeletedCustomerTests {
+
+      @BeforeEach
+      void setup() {
+        given()
+          .when()
+          .delete(customerLocation)
+          .then()
+          .statusCode(204);
+      }
+
+      @Test
+      void shouldReturn404WhenNotFound() {
+        given()
+          .when()
+          .accept(ContentType.JSON)
+          .get(customerLocation)
+          .then()
+          .statusCode(404);
+      }
+
+    }
+
+  }
+
 }
