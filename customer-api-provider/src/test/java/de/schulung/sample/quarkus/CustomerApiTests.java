@@ -92,6 +92,42 @@ class CustomerApiTests {
         .body("birth_date", is(equalTo("2000-10-04")));
     }
 
+    @Test
+    void shouldNotCreateCustomerWithInvalidName() {
+      given()
+        .when()
+        .contentType(ContentType.JSON)
+        .body("""
+          {
+              "name": "T",
+              "birth_date": "2000-10-04",
+              "state": "active"
+          }
+          """)
+        .accept(ContentType.JSON)
+        .post("/customers")
+        .then()
+        .statusCode(400);
+    }
+
+    @Test
+    void shouldNotCreateCustomerWithInvalidState() {
+      given()
+        .when()
+        .contentType(ContentType.JSON)
+        .body("""
+          {
+              "name": "Tom Mayer",
+              "birth_date": "2000-10-04",
+              "state": "gelbekatze"
+          }
+          """)
+        .accept(ContentType.JSON)
+        .post("/customers")
+        .then()
+        .statusCode(400);
+    }
+
   }
 
   @Nested
