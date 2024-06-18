@@ -1,6 +1,8 @@
 package de.schulung.sample.quarkus;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -36,12 +38,12 @@ public class CustomersService {
       .filter(c -> c.getState().equals(state));
   }
 
-  public void createCustomer(Customer customer) {
+  public void createCustomer(@Valid Customer customer) {
     customer.setUuid(UUID.randomUUID());
     customers.put(customer.getUuid(), customer);
   }
 
-  public Optional<Customer> getByUuid(UUID uuid) {
+  public Optional<Customer> getByUuid(@NotNull UUID uuid) {
     return Optional.ofNullable(customers.get(uuid));
   }
 

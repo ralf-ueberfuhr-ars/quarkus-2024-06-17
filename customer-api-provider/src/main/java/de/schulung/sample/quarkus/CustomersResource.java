@@ -51,7 +51,7 @@ public class CustomersResource {
   @Path("/{uuid}")
   public Customer findCustomerById(@PathParam("uuid") UUID uuid) {
     return service.getByUuid(uuid)
-      .orElseThrow(NotFoundException::new);
+         .orElseThrow(NotFoundException::new);
   }
 
   @DELETE
