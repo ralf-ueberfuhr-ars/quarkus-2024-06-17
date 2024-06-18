@@ -62,12 +62,12 @@ class CustomerApiTests {
         .when()
         .contentType(ContentType.JSON)
         .body("""
-          {
-              "name": "Tom",
-              "birthdate": "2000-10-04",
-              "state": "active"
-          }
-          """)
+                {
+                    "name": "Tom",
+                    "birthdate": "2000-10-04",
+                    "state": "active"
+                }
+                """)
         .accept(ContentType.JSON)
         .post("/customers")
         .then()
