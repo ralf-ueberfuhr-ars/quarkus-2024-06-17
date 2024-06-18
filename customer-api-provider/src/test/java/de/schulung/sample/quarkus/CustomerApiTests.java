@@ -77,6 +77,7 @@ class CustomerApiTests {
         .contentType(ContentType.JSON)
         .body("name", is(equalTo("Tom")))
         .body("birthdate", is(equalTo("2000-10-04")))
+        .body("state", is(equalTo("active")))
         .body("uuid", is(notNullValue()))
         .extract()
         .header("Location");
@@ -89,6 +90,25 @@ class CustomerApiTests {
         .statusCode(200)
         .body("name", is(equalTo("Tom")))
         .body("birthdate", is(equalTo("2000-10-04")));
+    }
+
+    @Test
+    void shouldNotCreateCustomerWithInvalidState() {
+      var location = given()
+        .when()
+        .contentType(ContentType.JSON)
+        .body("""
+                {
+                    "name": "Tom",
+                    "birthdate": "2000-10-04",
+                    "state": "gelbekatze"
+                }
+                """)
+        .accept(ContentType.JSON)
+        .post("/customers")
+        .then()
+        .statusCode(400);
+
     }
 
   }

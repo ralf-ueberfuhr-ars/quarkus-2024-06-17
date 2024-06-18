@@ -22,7 +22,7 @@ public class CustomersResource {
       UUID.randomUUID(),
       "Tom",
       LocalDate.of(2000, Month.DECEMBER, 6),
-      "active"
+      Customer.CustomerState.ACTIVE
     );
     customers.put(customer.getUuid(), customer);
   }
