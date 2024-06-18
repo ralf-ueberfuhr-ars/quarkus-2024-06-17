@@ -7,3 +7,7 @@
 ## Testkonzepte
 
 ![Testkonzepte](02-testpyramide.png)
+
+## Exceptions
+
+![Exceptions](03-exceptions.png)
