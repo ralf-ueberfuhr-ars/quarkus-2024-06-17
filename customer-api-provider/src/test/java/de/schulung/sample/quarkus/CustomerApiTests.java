@@ -64,7 +64,7 @@ class CustomerApiTests {
         .body("""
                 {
                     "name": "Tom",
-                    "birthdate": "2000-10-04",
+                    "birth_date": "2000-10-04",
                     "state": "active"
                 }
                 """)
@@ -76,7 +76,7 @@ class CustomerApiTests {
         .header("Location", startsWith("http"))
         .contentType(ContentType.JSON)
         .body("name", is(equalTo("Tom")))
-        .body("birthdate", is(equalTo("2000-10-04")))
+        .body("birth_date", is(equalTo("2000-10-04")))
         .body("uuid", is(notNullValue()))
         .extract()
         .header("Location");
@@ -88,7 +88,7 @@ class CustomerApiTests {
         .then()
         .statusCode(200)
         .body("name", is(equalTo("Tom")))
-        .body("birthdate", is(equalTo("2000-10-04")));
+        .body("birth_date", is(equalTo("2000-10-04")));
     }
 
   }
