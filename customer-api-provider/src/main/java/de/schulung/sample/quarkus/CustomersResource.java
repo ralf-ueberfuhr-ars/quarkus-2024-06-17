@@ -7,10 +7,7 @@ import jakarta.ws.rs.core.UriBuilder;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Path("/customers")
 public class CustomersResource {
@@ -55,10 +52,24 @@ public class CustomersResource {
       .build();
   }
 
+  // Exceptions: https://cristian.sulea.net/blog/rest-java-jax-rs-exception-handling/
+
   @GET
   @Path("/{uuid}")
   public Customer findCustomerById(@PathParam("uuid") UUID uuid) {
-    return customers.get(uuid);
+    return Optional.ofNullable(customers.get(uuid))
+      .orElseThrow(NotFoundException::new);
+  }
+
+  @DELETE
+  @Path("/{uuid}")
+  public Response deleteCustomerById(@PathParam("uuid") UUID uuid) {
+    if (customers.remove(uuid) == null) {
+      throw new NotFoundException();
+    }
+    return Response
+      .noContent()
+      .build();
   }
 
 }
