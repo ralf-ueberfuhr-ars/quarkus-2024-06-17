@@ -99,7 +99,6 @@
               <useBeanValidation>true</useBeanValidation>
               <openApiNullable>false</openApiNullable>
               <returnResponse>true</returnResponse>
-              <useJsonbAnnotations>true</useJsonbAnnotations>
             </configOptions>
           </configuration>
         </plugin>
