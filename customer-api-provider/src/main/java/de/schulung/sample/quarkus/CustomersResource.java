@@ -5,38 +5,30 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
+import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.*;
+import java.util.Collection;
+import java.util.UUID;
 
 @Path("/customers")
+@RequiredArgsConstructor
 public class CustomersResource {
 
-  private final Map<UUID, Customer> customers = new HashMap<>();
-
-  {
-    var customer = new Customer(
-      UUID.randomUUID(),
-      "Tom",
-      LocalDate.of(2000, Month.DECEMBER, 6),
-      "active"
-    );
-    customers.put(customer.getUuid(), customer);
-  }
+  private final CustomersService service;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Collection<Customer> getCustomers() {
-    return customers.values();
+    return service
+      .getAll()
+      .toList();
   }
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createCustomer(@Valid Customer customer) {
-    customer.setUuid(UUID.randomUUID());
-    customers.put(customer.getUuid(), customer);
+    service.createCustomer(customer);
     final var location = UriBuilder.fromResource(CustomersResource.class)
       .path(CustomersResource.class, "findCustomerById")
       .build(customer.getUuid().toString());
@@ -58,14 +50,14 @@ public class CustomersResource {
   @GET
   @Path("/{uuid}")
   public Customer findCustomerById(@PathParam("uuid") UUID uuid) {
-    return Optional.ofNullable(customers.get(uuid))
+    return service.getByUuid(uuid)
       .orElseThrow(NotFoundException::new);
   }
 
   @DELETE
   @Path("/{uuid}")
   public Response deleteCustomerById(@PathParam("uuid") UUID uuid) {
-    if (customers.remove(uuid) == null) {
+    if (!service.delete(uuid)) {
       throw new NotFoundException();
     }
     return Response
