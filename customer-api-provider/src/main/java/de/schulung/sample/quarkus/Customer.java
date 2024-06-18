@@ -1,5 +1,6 @@
 package de.schulung.sample.quarkus;
 
+import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +20,8 @@ public class Customer {
   @Setter(onMethod_ = @JsonbTransient)
   private UUID uuid;
   private String name;
-  private LocalDate birthdate; // TODO birth_date?
+  @JsonbProperty("birth_date") // TODO -> use snake_case globally?
+  private LocalDate birthdate;
   private String state;
 
 }

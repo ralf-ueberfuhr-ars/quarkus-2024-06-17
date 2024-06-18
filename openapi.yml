@@ -246,7 +246,7 @@ components:
         - disabled
     Customer:
       required:
-        - birthdate
+        - birth_date
         - name
       type: object
       properties:
@@ -259,7 +259,7 @@ components:
           maxLength: 100
           type: string
           example: Tom Mayer
-        birthdate:
+        birth_date:
           type: string
           format: date
         state:
