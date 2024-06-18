@@ -1,6 +1,7 @@
 package de.schulung.sample.quarkus;
 
 import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.json.bind.annotation.JsonbTypeAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,16 @@ public class Customer {
   private UUID uuid;
   private String name;
   private LocalDate birthdate; // TODO birth_date?
-  private String state;
+  @JsonbTypeAdapter(CustomerStateAdapter.class) // TODO register globally?
+  private CustomerState state = CustomerState.ACTIVE;
+
+  // Would work without any adapter, if the name() matches the JSON value.
+  // Here: "active", "locked" and "disabled".
+  //  - DON'T: This would break with Java naming conventions.
+  public enum CustomerState {
+
+    ACTIVE, LOCKED, DISABLED
+
+  }
 
 }
