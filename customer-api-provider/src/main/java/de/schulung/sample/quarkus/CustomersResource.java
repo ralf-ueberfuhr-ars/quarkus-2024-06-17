@@ -15,8 +15,6 @@ import java.util.UUID;
 @Path("/customers")
 public class CustomersResource {
 
-  // TODO Swagger Codegen
-
   private final Map<UUID, Customer> customers = new HashMap<>();
 
   {

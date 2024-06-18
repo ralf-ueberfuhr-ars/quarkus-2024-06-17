@@ -1,5 +1,6 @@
 package de.schulung.sample.quarkus;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Customer {
 
-  private UUID uuid; // TODO readonly
+  // readonly property
+  @Setter(onMethod_ = @JsonbTransient)
+  private UUID uuid;
   private String name;
   private LocalDate birthdate; // TODO birth_date?
-  private String state; // TODO enum?
+  private String state;
 
 }
