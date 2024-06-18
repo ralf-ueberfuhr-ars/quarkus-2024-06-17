@@ -1,5 +1,6 @@
 package de.schulung.sample.quarkus;
 
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -33,7 +34,7 @@ public class CustomersResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response createCustomer(Customer customer) {
+  public Response createCustomer(@Valid Customer customer) {
     customer.setUuid(UUID.randomUUID());
     customers.put(customer.getUuid(), customer);
     final var location = UriBuilder.fromResource(CustomersResource.class)
