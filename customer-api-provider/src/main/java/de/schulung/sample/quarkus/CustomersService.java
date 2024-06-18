@@ -3,6 +3,7 @@ package de.schulung.sample.quarkus;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -33,7 +34,11 @@ public class CustomersService {
       .stream();
   }
 
-  public Stream<Customer> getByState(String state) {
+  public Stream<Customer> getByState(
+    @NotNull
+    @Pattern(regexp = "active|locked|disabled")
+    String state
+  ) {
     return this.getAll()
       .filter(c -> c.getState().equals(state));
   }
@@ -47,11 +52,11 @@ public class CustomersService {
     return Optional.ofNullable(customers.get(uuid));
   }
 
-  public boolean exists(UUID uuid) {
+  public boolean exists(@NotNull UUID uuid) {
     return customers.containsKey(uuid);
   }
 
-  public boolean delete(UUID uuid) {
+  public boolean delete(@NotNull UUID uuid) {
     return customers.remove(uuid) != null;
   }
 

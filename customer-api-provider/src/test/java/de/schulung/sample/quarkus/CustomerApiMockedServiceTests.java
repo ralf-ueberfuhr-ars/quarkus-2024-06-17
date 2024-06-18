@@ -9,8 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @QuarkusTest
 public class CustomerApiMockedServiceTests {
@@ -37,5 +36,26 @@ public class CustomerApiMockedServiceTests {
   }
 
   // TODO: wenn invalider Kunde angelegt werden soll, dann 400 + kein Service-Aufruf
+
+  @Test
+  void shouldNotInvokeServiceWhenInvalidCustomerIsCreated() {
+    given()
+      .when()
+      .contentType(ContentType.JSON)
+      .body("""
+        {
+            "name": "T",
+            "birth_date": "2000-10-04",
+            "state": "active"
+        }
+        """)
+      .accept(ContentType.JSON)
+      .post("/customers")
+      .then()
+      .statusCode(400);
+
+    verifyNoInteractions(service);
+
+  }
 
 }

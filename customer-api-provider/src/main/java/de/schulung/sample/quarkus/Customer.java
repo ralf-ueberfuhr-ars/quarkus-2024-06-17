@@ -2,6 +2,7 @@ package de.schulung.sample.quarkus;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -22,10 +23,12 @@ public class Customer {
   @Setter(onMethod_ = @JsonbTransient)
   private UUID uuid;
   @Size(min = 3, max = 100)
+  @NotNull
   private String name;
   @JsonbProperty("birth_date") // TODO -> use snake_case globally?
   private LocalDate birthdate;
   @Pattern(regexp = "active|locked|disabled")
+  @NotNull
   private String state;
 
 }
