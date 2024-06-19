@@ -15,3 +15,9 @@
 ## Onion Architecture
 
 ![Onion Architecture](04-layers.png)
+
+## `@Singleton` vs `@ApplicationScoped`
+
+Bei `@Singleton` wird kein Proxy erzeugt. Das kann notwendig sein, z.B. wenn die Klasse `final` ist.
+
+![Dynamic Proxies im CDI](05-dynamic-proxies.png)
