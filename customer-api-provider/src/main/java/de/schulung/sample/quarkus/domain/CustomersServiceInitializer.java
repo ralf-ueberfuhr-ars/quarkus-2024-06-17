@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.time.Month;
 
-@Dependent
+@Dependent // destroy object immediately
 @RequiredArgsConstructor
 public class CustomersServiceInitializer {
 
