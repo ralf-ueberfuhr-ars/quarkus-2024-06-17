@@ -11,3 +11,7 @@
 ## Exceptions
 
 ![Exceptions](03-exceptions.png)
+
+## Onion Architecture
+
+![Onion Architecture](04-layers.png)

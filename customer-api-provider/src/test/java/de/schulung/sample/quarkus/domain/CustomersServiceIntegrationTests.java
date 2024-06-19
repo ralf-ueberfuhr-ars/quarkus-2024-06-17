@@ -1,4 +1,4 @@
-package de.schulung.sample.quarkus;
+package de.schulung.sample.quarkus.domain;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -12,11 +12,9 @@ public class CustomersServiceIntegrationTests {
   @Inject
   CustomersService service;
 
-  // TODO Testfall: Customer anlegen mit zu kurzem Namen -> Validierungsfehler
-
   @Test
   void shouldNotCreateInvalidCustomer() {
-    var customer = new Customer();
+    var customer = Customer.builder().build();
     assertThatThrownBy(() -> service.createCustomer(customer))
       .isNotNull();
   }
