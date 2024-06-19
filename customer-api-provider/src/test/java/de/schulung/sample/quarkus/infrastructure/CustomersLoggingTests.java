@@ -25,7 +25,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 
 @QuarkusTest
-public class CustomersLoggingTests {
+class CustomersLoggingTests {
 
   /*
    * Requirement:
