@@ -1,6 +1,5 @@
 package de.schulung.sample.quarkus.boundary;
 
-import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -25,8 +24,8 @@ public class CustomerDto {
   @Size(min = 3, max = 100)
   @NotNull
   private String name;
-  @JsonbProperty("birth_date") // TODO -> use snake_case globally?
-  private LocalDate birthdate;
+  //@JsonbProperty("birth_date")
+  private LocalDate birthDate;
   @Pattern(regexp = "active|locked|disabled")
   @NotNull
   private String state;

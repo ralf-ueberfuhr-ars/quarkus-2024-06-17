@@ -1,13 +1,17 @@
 package de.schulung.sample.quarkus.boundary;
 
 import de.schulung.sample.quarkus.domain.Customer;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "cdi")
 public interface CustomerDtoMapper {
 
+  @Mapping(source = "birthDate", target = "birthdate")
   Customer map(CustomerDto source);
 
+  @InheritInverseConfiguration
   CustomerDto map(Customer source);
 
   default String mapState(Customer.CustomerState source) {
