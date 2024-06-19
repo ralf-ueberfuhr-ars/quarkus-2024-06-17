@@ -1,5 +1,6 @@
-package de.schulung.sample.quarkus;
+package de.schulung.sample.quarkus.boundary;
 
+import de.schulung.sample.quarkus.domain.CustomersService;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,19 +16,22 @@ import java.util.UUID;
 public class CustomersResource {
 
   private final CustomersService service;
+  private final CustomerDtoMapper mapper;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Collection<Customer> getCustomers() {
+  public Collection<CustomerDto> getCustomers() {
     return service
       .getAll()
+      .map(mapper::map)
       .toList();
   }
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response createCustomer(@Valid Customer customer) {
+  public Response createCustomer(@Valid CustomerDto dto) {
+    var customer = mapper.map(dto);
     service.createCustomer(customer);
     final var location = UriBuilder.fromResource(CustomersResource.class)
       .path(CustomersResource.class, "findCustomerById")
@@ -41,7 +45,7 @@ public class CustomersResource {
      */
     return Response
       .created(location)
-      .entity(customer)
+      .entity(mapper.map(customer))
       .build();
   }
 
@@ -49,9 +53,10 @@ public class CustomersResource {
 
   @GET
   @Path("/{uuid}")
-  public Customer findCustomerById(@PathParam("uuid") UUID uuid) {
+  public CustomerDto findCustomerById(@PathParam("uuid") UUID uuid) {
     return service.getByUuid(uuid)
-         .orElseThrow(NotFoundException::new);
+      .map(mapper::map)
+      .orElseThrow(NotFoundException::new);
   }
 
   @DELETE

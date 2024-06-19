@@ -1,4 +1,4 @@
-package de.schulung.sample.quarkus;
+package de.schulung.sample.quarkus.boundary;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;

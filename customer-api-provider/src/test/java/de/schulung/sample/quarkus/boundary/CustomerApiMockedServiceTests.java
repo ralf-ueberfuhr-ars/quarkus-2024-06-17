@@ -1,5 +1,6 @@
-package de.schulung.sample.quarkus;
+package de.schulung.sample.quarkus.boundary;
 
+import de.schulung.sample.quarkus.domain.CustomersService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;

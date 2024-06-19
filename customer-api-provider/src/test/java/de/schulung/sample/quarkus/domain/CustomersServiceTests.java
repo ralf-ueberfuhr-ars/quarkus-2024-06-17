@@ -1,4 +1,4 @@
-package de.schulung.sample.quarkus;
+package de.schulung.sample.quarkus.domain;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +13,10 @@ class CustomersServiceTests {
 
   @Test
   void shouldAddUuidToNewCustomer() {
-    var customer = new Customer();
-    customer.setName("Tom");
-    customer.setBirthdate(LocalDate.of(2000, Month.FEBRUARY, 2));
-    customer.setState("active");
+    var customer = Customer.builder()
+      .name("Tom")
+      .birthdate(LocalDate.of(2000, Month.FEBRUARY, 2))
+      .build();
 
     service.createCustomer(customer);
 
@@ -26,10 +26,10 @@ class CustomersServiceTests {
 
   @Test
   void shouldFindNewCustomer() {
-    var customer = new Customer();
-    customer.setName("Tom");
-    customer.setBirthdate(LocalDate.of(2000, Month.FEBRUARY, 2));
-    customer.setState("active");
+    var customer = Customer.builder()
+      .name("Tom")
+      .birthdate(LocalDate.of(2000, Month.FEBRUARY, 2))
+      .build();
     service.createCustomer(customer);
     var uuid = customer.getUuid();
 

@@ -1,4 +1,4 @@
-package de.schulung.sample.quarkus;
+package de.schulung.sample.quarkus.boundary;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class CustomerDto {
 
   // readonly property
   @Setter(onMethod_ = @JsonbTransient)

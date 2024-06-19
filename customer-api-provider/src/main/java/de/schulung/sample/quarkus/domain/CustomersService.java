@@ -1,9 +1,8 @@
-package de.schulung.sample.quarkus;
+package de.schulung.sample.quarkus.domain;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -19,12 +18,11 @@ public class CustomersService {
   private final Map<UUID, Customer> customers = new HashMap<>();
 
   { // TODO replace this?
-    var customer = new Customer(
-      UUID.randomUUID(),
-      "Tom",
-      LocalDate.of(2000, Month.DECEMBER, 6),
-      "active"
-    );
+    var customer = Customer.builder()
+      .uuid(UUID.randomUUID())
+      .name("Tom")
+      .birthdate(LocalDate.of(2000, Month.DECEMBER, 6))
+      .build();
     customers.put(customer.getUuid(), customer);
   }
 
@@ -34,13 +32,9 @@ public class CustomersService {
       .stream();
   }
 
-  public Stream<Customer> getByState(
-    @NotNull
-    @Pattern(regexp = "active|locked|disabled")
-    String state
-  ) {
+  public Stream<Customer> getByState(@NotNull Customer.CustomerState state) {
     return this.getAll()
-      .filter(c -> c.getState().equals(state));
+      .filter(c -> c.getState() == state);
   }
 
   public void createCustomer(@Valid Customer customer) {
