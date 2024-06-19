@@ -4,8 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -16,15 +14,6 @@ import java.util.stream.Stream;
 public class CustomersService {
 
   private final Map<UUID, Customer> customers = new HashMap<>();
-
-  { // TODO replace this?
-    var customer = Customer.builder()
-      .uuid(UUID.randomUUID())
-      .name("Tom")
-      .birthdate(LocalDate.of(2000, Month.DECEMBER, 6))
-      .build();
-    customers.put(customer.getUuid(), customer);
-  }
 
   public Stream<Customer> getAll() {
     return this.customers
