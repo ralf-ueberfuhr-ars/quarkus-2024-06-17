@@ -1,13 +1,11 @@
 package de.schulung.sample.quarkus.domain;
 
 import de.schulung.sample.quarkus.domain.events.CustomerCreatedEvent;
-import io.quarkus.arc.log.LoggerName;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.jboss.logging.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
