@@ -20,6 +20,7 @@ public class Customer {
   private String name;
   private LocalDate birthdate;
   @NotNull
+  @Builder.Default
   private CustomerState state = CustomerState.ACTIVE;
 
   public enum CustomerState {
