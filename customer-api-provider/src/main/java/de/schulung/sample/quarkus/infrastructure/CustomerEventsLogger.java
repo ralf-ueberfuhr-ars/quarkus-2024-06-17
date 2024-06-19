@@ -1,4 +1,4 @@
-package de.schulung.sample.quarkus.domain;
+package de.schulung.sample.quarkus.infrastructure;
 
 import de.schulung.sample.quarkus.domain.events.CustomerCreatedEvent;
 import io.quarkus.arc.log.LoggerName;

@@ -3,9 +3,9 @@ package de.schulung.sample.quarkus.domain;
 import de.schulung.sample.quarkus.domain.events.CustomerCreatedEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
-import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +14,13 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 @ApplicationScoped
+@RequiredArgsConstructor
 public class CustomersService {
 
   private final Map<UUID, Customer> customers = new HashMap<>();
 
-  @Inject // TODO: can we use an interceptor
-  Event<CustomerCreatedEvent> eventPublisher;
+  // TODO: can we use an interceptor
+  private final Event<CustomerCreatedEvent> eventPublisher;
 
   public Stream<Customer> getAll() {
     return this.customers
