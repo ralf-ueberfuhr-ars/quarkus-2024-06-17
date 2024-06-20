@@ -1,6 +1,7 @@
 package de.schulung.sample.quarkus.domain;
 
 import de.schulung.sample.quarkus.domain.events.CustomerCreatedEvent;
+import de.schulung.sample.quarkus.shared.interceptors.LogPerformance;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.validation.Valid;
@@ -33,6 +34,7 @@ public class CustomersService {
       .filter(c -> c.getState() == state);
   }
 
+  @LogPerformance
   public void createCustomer(@Valid Customer customer) {
     customer.setUuid(UUID.randomUUID());
     customers.put(customer.getUuid(), customer);
