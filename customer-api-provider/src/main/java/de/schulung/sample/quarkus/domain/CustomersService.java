@@ -7,6 +7,7 @@ import jakarta.enterprise.event.Event;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.jboss.logging.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class CustomersService {
       .filter(c -> c.getState() == state);
   }
 
-  @LogPerformance
+  @LogPerformance(Logger.Level.WARN)
   public void createCustomer(@Valid Customer customer) {
     customer.setUuid(UUID.randomUUID());
     customers.put(customer.getUuid(), customer);
