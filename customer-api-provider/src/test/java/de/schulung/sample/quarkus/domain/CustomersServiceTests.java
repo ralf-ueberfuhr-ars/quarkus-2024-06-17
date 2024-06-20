@@ -1,23 +1,22 @@
 package de.schulung.sample.quarkus.domain;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
 class CustomersServiceTests {
+
+  // TODO ist das noch sinnvoll so?
 
   // nicht mehr notwendig wegen @FireEvent interceptor
   //@Mock
   //Event<CustomerCreatedEvent> event;
-  @InjectMocks
-  CustomersService service;
+  private final CustomersService service = new CustomersService(
+    new CustomersSinkInMemoryImpl()
+  );
 
   @Test
   void shouldAddUuidToNewCustomer() {

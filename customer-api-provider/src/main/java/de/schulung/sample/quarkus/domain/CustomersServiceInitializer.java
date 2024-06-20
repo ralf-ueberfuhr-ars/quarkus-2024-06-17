@@ -61,11 +61,13 @@ public class CustomersServiceInitializer {
 
   @Startup
   public void initializeData() {
-    var customer = Customer.builder()
-      .name(customerConfig.getName())
-      .birthdate(LocalDate.parse(customerConfig.getBirthdate()))
-      .build();
-    service.createCustomer(customer);
+    if(service.count() < 1) {
+      var customer = Customer.builder()
+        .name(customerConfig.getName())
+        .birthdate(LocalDate.parse(customerConfig.getBirthdate()))
+        .build();
+      service.createCustomer(customer);
+    }
   }
 
 }
