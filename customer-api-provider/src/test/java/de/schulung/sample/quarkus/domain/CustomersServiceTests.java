@@ -1,11 +1,8 @@
 package de.schulung.sample.quarkus.domain;
 
-import de.schulung.sample.quarkus.domain.events.CustomerCreatedEvent;
-import jakarta.enterprise.event.Event;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -16,8 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 class CustomersServiceTests {
 
-  @Mock
-  Event<CustomerCreatedEvent> event;
+  // nicht mehr notwendig wegen @FireEvent interceptor
+  //@Mock
+  //Event<CustomerCreatedEvent> event;
   @InjectMocks
   CustomersService service;
 

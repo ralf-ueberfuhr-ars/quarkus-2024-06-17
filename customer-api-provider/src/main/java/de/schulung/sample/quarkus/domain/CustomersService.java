@@ -1,11 +1,13 @@
 package de.schulung.sample.quarkus.domain;
 
 import de.schulung.sample.quarkus.domain.events.CustomerCreatedEvent;
+import de.schulung.sample.quarkus.shared.interceptors.LogPerformance;
+import de.schulung.sample.quarkus.shared.interceptors.FireEvent;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Event;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.jboss.logging.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +21,6 @@ public class CustomersService {
 
   private final Map<UUID, Customer> customers = new HashMap<>();
 
-  // TODO: can we use an interceptor
-  private final Event<CustomerCreatedEvent> eventPublisher;
-
   public Stream<Customer> getAll() {
     return this.customers
       .values()
@@ -33,10 +32,11 @@ public class CustomersService {
       .filter(c -> c.getState() == state);
   }
 
+  @LogPerformance(Logger.Level.DEBUG)
+  @FireEvent(CustomerCreatedEvent.class)
   public void createCustomer(@Valid Customer customer) {
     customer.setUuid(UUID.randomUUID());
     customers.put(customer.getUuid(), customer);
-    eventPublisher.fire(new CustomerCreatedEvent(customer));
   }
 
   public Optional<Customer> getByUuid(@NotNull UUID uuid) {
