@@ -28,4 +28,12 @@ public class CustomersResource {
       );
   }
 
+  @GET
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("/reset")
+  public String reset() {
+    this.service.reset();
+    return "Done.";
+  }
+
 }
