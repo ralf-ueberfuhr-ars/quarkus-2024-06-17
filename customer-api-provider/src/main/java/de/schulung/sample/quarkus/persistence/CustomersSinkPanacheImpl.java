@@ -2,6 +2,7 @@ package de.schulung.sample.quarkus.persistence;
 
 import de.schulung.sample.quarkus.domain.Customer;
 import de.schulung.sample.quarkus.domain.CustomersSink;
+import io.quarkus.arc.properties.IfBuildProperty;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Typed;
 import jakarta.transaction.Transactional;
@@ -14,6 +15,10 @@ import java.util.stream.Stream;
 @ApplicationScoped
 @Typed(CustomersSink.class)
 @RequiredArgsConstructor
+@IfBuildProperty(
+  name = "persistence.sink.implementation",
+  stringValue = "panache"
+)
 public class CustomersSinkPanacheImpl implements CustomersSink {
 
   private final CustomerEntityRepository repo;
