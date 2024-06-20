@@ -1,15 +1,25 @@
 package de.schulung.sample.quarkus.domain;
 
+import de.schulung.sample.quarkus.domain.events.CustomerCreatedEvent;
+import jakarta.enterprise.event.Event;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 class CustomersServiceTests {
 
-  private final CustomersService service = new CustomersService();
+  @Mock
+  Event<CustomerCreatedEvent> event;
+  @InjectMocks
+  CustomersService service;
 
   @Test
   void shouldAddUuidToNewCustomer() {
