@@ -32,7 +32,7 @@ public class CustomersService {
       .filter(c -> c.getState() == state);
   }
 
-  @LogPerformance(Logger.Level.WARN)
+  @LogPerformance(Logger.Level.DEBUG)
   @FireEvent(CustomerCreatedEvent.class)
   public void createCustomer(@Valid Customer customer) {
     customer.setUuid(UUID.randomUUID());

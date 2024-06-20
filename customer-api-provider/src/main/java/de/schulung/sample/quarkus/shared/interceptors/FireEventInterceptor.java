@@ -10,7 +10,7 @@ import lombok.SneakyThrows;
 
 import java.util.Optional;
 
-@Priority(5) // do this before validation to allow publishing events on exception too
+@Priority(5)
 @Interceptor
 @FireEvent(Object.class)
 public class FireEventInterceptor {
