@@ -28,14 +28,15 @@ public class CustomersSinkPanacheImpl implements CustomersSink {
 
   @Override
   public Stream<Customer> findByState(Customer.CustomerState state) {
-    // TODO
-    return CustomersSink.super.findByState(state);
+    return repo.list("state", state)
+      .stream()
+      .map(mapper::map);
   }
 
   @Override
   public Optional<Customer> findByUuid(UUID uuid) {
-    // TODO findById mit UUID?
-    return CustomersSink.super.findByUuid(uuid);
+    return repo.findByIdOptional(uuid)
+      .map(mapper::map);
   }
 
   @Override
@@ -48,15 +49,14 @@ public class CustomersSinkPanacheImpl implements CustomersSink {
   }
 
   @Override
+  @Transactional
   public boolean delete(UUID uuid) {
-    // TODO delete by UUID
-    return false;
+    return this.repo.deleteById(uuid);
   }
 
   @Override
   public boolean exists(UUID uuid) {
-    // TODO exists by UUID
-    return CustomersSink.super.exists(uuid);
+    return repo.findByIdOptional(uuid).isPresent();
   }
 
   @Override
