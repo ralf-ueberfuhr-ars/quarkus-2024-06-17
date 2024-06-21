@@ -21,3 +21,8 @@
 Bei `@Singleton` wird kein Proxy erzeugt. Das kann notwendig sein, z.B. wenn die Klasse `final` ist.
 
 ![Dynamic Proxies im CDI](05-dynamic-proxies.png)
+
+## Datenbankzugriffe
+
+![Mandantenfähigkeit](06-mandantenfaehigkeit.png)
+![JDBC-JPA-Panache](07-jdbc-jpa-panache.png)
