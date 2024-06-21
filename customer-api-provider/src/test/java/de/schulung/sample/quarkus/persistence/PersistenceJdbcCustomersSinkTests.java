@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @QuarkusTest
 @TestTransaction
-@TestProfile(UsePanacheImplementation.class)
-public class PersistenceCustomersSinkTests {
+@TestProfile(UseJdbcImplementation.class)
+public class PersistenceJdbcCustomersSinkTests {
 
   @Inject
   CustomersSink sink;
