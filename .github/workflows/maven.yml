@@ -6,12 +6,14 @@ on:
       - "main"
     paths:
       - "customer-api-provider/**"
+      - "customer-api-consumer/**"
       - ".github/**"
   pull_request:
     branches:
       - "main"
     paths:
       - "customer-api-provider/**"
+      - "customer-api-consumer/**"
       - ".github/**"
 
 jobs:
@@ -27,6 +29,9 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: Build API Provider with Maven
       working-directory: customer-api-provider
+      run: mvn -B package --file pom.xml
+    - name: Build API Consumer with Maven
+      working-directory: customer-api-consumer
       run: mvn -B package --file pom.xml
