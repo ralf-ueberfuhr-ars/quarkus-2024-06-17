@@ -9,7 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CustomersServiceTests {
 
-  private final CustomersService service = new CustomersService();
+  // TODO ist das noch sinnvoll so?
+
+  // nicht mehr notwendig wegen @FireEvent interceptor
+  //@Mock
+  //Event<CustomerCreatedEvent> event;
+  private final CustomersService service = new CustomersService(
+    new CustomersSinkInMemoryImpl()
+  );
 
   @Test
   void shouldAddUuidToNewCustomer() {
