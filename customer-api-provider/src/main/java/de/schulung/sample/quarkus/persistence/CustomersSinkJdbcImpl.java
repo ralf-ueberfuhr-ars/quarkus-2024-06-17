@@ -151,14 +151,13 @@ public class CustomersSinkJdbcImpl implements CustomersSink {
     // TODO only insert, we need an update too, if the UUID is already set
     try (Connection con = ds.getConnection();
          PreparedStatement stmt = con.prepareStatement(
-           "insert into CUSTOMERS(UUID,NAME,DATE_OF_BIRTH,STATE) values(?,?,?,?)",
+           "insert into CUSTOMERS(NAME,DATE_OF_BIRTH,STATE) values(?,?,?)",
            Statement.RETURN_GENERATED_KEYS
          )) {
 
-      stmt.setString(1, convertUuid(customer.getUuid()));
-      stmt.setString(2, customer.getName());
-      stmt.setDate(3, convertDate(customer.getBirthdate()));
-      stmt.setInt(4, convertState(customer.getState()));
+      stmt.setString(1, customer.getName());
+      stmt.setDate(2, convertDate(customer.getBirthdate()));
+      stmt.setInt(3, convertState(customer.getState()));
       stmt.executeUpdate();
 
       try (ResultSet rs = stmt.getGeneratedKeys()) {
