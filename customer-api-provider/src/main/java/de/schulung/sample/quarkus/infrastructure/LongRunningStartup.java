@@ -43,13 +43,10 @@ public class LongRunningStartup {
   @ApplicationScoped
   @Liveness
   public HealthCheck myStartupLiveness() {
-    return new HealthCheck() {
-      @Override
-      public HealthCheckResponse call() {
-        final var result = HealthCheckResponse
-          .named("My long-running startup");
-        return (initializingFailed ? result.down() : result.up()).build();
-      }
+    return () -> {
+      final var result = HealthCheckResponse
+        .named("My long-running startup");
+      return (initializingFailed ? result.down() : result.up()).build();
     };
   }
 
@@ -57,13 +54,10 @@ public class LongRunningStartup {
   @ApplicationScoped
   @Readiness
   public HealthCheck myStartupReadyness() {
-    return new HealthCheck() {
-      @Override
-      public HealthCheckResponse call() {
-        final var result = HealthCheckResponse
-          .named("My long-running startup");
-        return (initialized ? result.up() : result.down()).build();
-      }
+    return () -> {
+      final var result = HealthCheckResponse
+        .named("My long-running startup");
+      return (initialized ? result.up() : result.down()).build();
     };
   }
 
